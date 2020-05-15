@@ -4,8 +4,8 @@ export { parseTime, formatTime } from '@/utils'
 /**
  * Show plural label if time is plural number
  * @param {number} time
- * @param {string} label
- * @return {string}
+ * @param {String} label
+ * @return {String}
  */
 function pluralize(time, label) {
   if (time === 1) {
