@@ -73,8 +73,27 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/audit',
+    component: Layout,
+    meta: { title: '讲解审核', icon: 'edit' },
+    redirect: '/audit/comlpete',
+    children: [
+      {
+        path: '/audit/comlpete',
+        component: () => import('@/views/audit/complete'),
+        name: 'complete',
+        meta: { title: '已审核的申请', icon: 'documentation' }
+      },
+      {
+        path: '/audit/incomlpete',
+        component: () => import('@/views/audit/incomplete'),
+        name: 'incomlpete',
+        meta: { title: '未审核的申请', icon: 'documentation' }
+      }
+    ]
+  },
   { path: '/data', component: () => import('@/views/data/index'), meta: { title: '数据管理', icon: 'documentation' }},
-  { path: '/audit', component: () => import('@/views/audit/index'), meta: { title: '讲解审核', icon: 'documentation' }},
   { path: '/backup', component: () => import('@/views/backup/index'), meta: { title: '数据备份和恢复', icon: 'documentation' }},
   { path: '*', redirect: '/404', hidden: true }
 ]

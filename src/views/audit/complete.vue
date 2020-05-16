@@ -1,26 +1,16 @@
 <template>
   <div>
-    <el-button
-      class="filter-item"
-      type="primary"
-      text-align="center"
-      icon="el-icon-edit"
-      style="margin-bottom: 5px;margin-top: 5px;margin-left: 20px"
-      @click="handleCreate"
-    >
-      新增管理员
-    </el-button>
     <el-table
       :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
       align="center"
     >
       <el-table-column
-        label="姓名"
+        label="申请人"
         prop="name"
       />
       <el-table-column
-        label="账号"
+        label="讲解名称"
         prop="account"
       />
       <el-table-column
@@ -38,11 +28,11 @@
           />
         </template>
         <template slot-scope="scope">
-          <adminedit title="管理员信息" :data="row" align="center">
+          <detail title="讲解信息" :data="row" align="center">
             <el-button
               size="mini"
-            >编辑</el-button>
-          </adminedit>
+            >详情</el-button>
+          </detail>
           <el-button
             size="mini"
             type="danger"
@@ -54,11 +44,10 @@
   </div>
 </template>
 <script>
-
-import adminedit from './components/adminedit'
+import detail from './component/detail'
 
 export default {
-  components: { adminedit },
+  components: { detail },
   data() {
     return {
       tableData: [{
