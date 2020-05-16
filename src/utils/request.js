@@ -5,34 +5,34 @@ import { getToken } from '@/utils/auth'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
-  timeout: 5000
+  timeout: 30 * 1000
 })
+
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
-      config.headers['X-Token'] = getToken()
+      config.headers['Authorization'] = `Bearer ${getToken()}`
     }
     return config
   },
   error => {
-    console.log(error)
     return Promise.reject(error)
   }
 )
-service.interceptors.response.use(
 
+// response interceptor
+service.interceptors.response.use(
   response => {
     const res = response.data
-
-    if (res.code !== 20000) {
+    const errMsg = res.message || res.msg || '请求失败'
+    if (res.code !== 0) {
       Message({
-        message: res.message || 'Error',
+        message: errMsg,
         type: 'error',
         duration: 5 * 1000
       })
-
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        MessageBox.confirm('登录已失效，是否重新登录', '确认登出', {
+      if (res.code === -2) {
+        MessageBox.confirm('您的登录状态已经失效，请重新登录', '登录失效', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
           type: 'warning'
@@ -42,15 +42,19 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(errMsg))
     } else {
       return res
     }
   },
   error => {
-    console.log('err' + error)
+    console.log('reject', { error })
+    let errMsg = error.message || error.msg || '请求失败'
+    if (error.response && error.response.data) {
+      errMsg = error.response.data.msg
+    }
     Message({
-      message: error.message,
+      message: errMsg,
       type: 'error',
       duration: 5 * 1000
     })

@@ -11,7 +11,7 @@
     >
       <i class="el-icon-upload" />
       <div class="el-upload__text">
-        Drag或<em>点击上传</em>
+        请将电子书拖入或<em>点击上传</em>
       </div>
     </el-upload>
     <div v-show="imageUrl.length>0" class="image-preview">
@@ -88,8 +88,8 @@ export default {
     width: 100%;
     height: 100%;
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     border: 1px dashed #d9d9d9;
     .image-preview-wrapper {
       position: relative;
@@ -106,7 +106,6 @@ export default {
       height: 100%;
       left: 0;
       top: 0;
-      cursor: default;
       text-align: center;
       color: #fff;
       opacity: 0;
@@ -114,7 +113,6 @@ export default {
       background-color: rgba(0, 0, 0, .5);
       transition: opacity .3s;
       cursor: pointer;
-      text-align: center;
       line-height: 200px;
       .el-icon-delete {
         font-size: 36px;
