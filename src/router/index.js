@@ -93,8 +93,27 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/br',
+    component: Layout,
+    meta: { title: '数据备份和恢复', icon: 'edit' },
+    redirect: '/br/backup',
+    children: [
+      {
+        path: '/br/backup',
+        component: () => import('@/views/br/backup'),
+        name: 'backup',
+        meta: { title: '备份', icon: 'documentation' }
+      },
+      {
+        path: '/br/recovery',
+        component: () => import('@/views/br/recovery'),
+        name: 'recovery',
+        meta: { title: '恢复', icon: 'documentation' }
+      }
+    ]
+  },
   { path: '/data', component: () => import('@/views/data/index'), meta: { title: '数据管理', icon: 'documentation' }},
-  { path: '/backup', component: () => import('@/views/backup/index'), meta: { title: '数据备份和恢复', icon: 'documentation' }},
   { path: '*', redirect: '/404', hidden: true }
 ]
 
